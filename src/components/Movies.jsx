@@ -1,20 +1,34 @@
 import { Component } from 'react'
 import { Link } from 'react-router-dom'
+
 // Services
 import { deleteMovie, getMovies } from '../services/movieService'
 import { getGenres } from '../services/genreService'
+import _ from 'lodash'
+
 // Common components
 import MoviesTable from './common/MoviesTable'
 import Pagination from './common/Pagination'
 import { ListGroup } from './common/ListGroup'
 import { SearchBox } from './common/SearchBox'
+
 // Utils
 import Paginate from '../utils/Paginate'
+
 // Styles
 import 'bootstrap/dist/css/bootstrap.css'
 import { toast } from 'react-toastify'
+import styled from 'styled-components'
 
-import _ from 'lodash'
+const MoviesContainer = styled.div `
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 1240px;
+  width: 100%;
+  margin-top: 60px;
+
+`
 
 class Movies extends Component {
   state = {
@@ -96,11 +110,12 @@ class Movies extends Component {
   }
 
   async componentDidMount() {
+    
     const { data } = await getGenres()
     let genres = [{ name: 'All genres' }, ...data]
-
+    
     const { data: movies } = await getMovies()
-
+  
     this.setState({ movies, genres })
   }
 
@@ -127,7 +142,7 @@ class Movies extends Component {
 
     const { count: length, data: movies } = this.getPageData()
     return (
-      <div className="container row ml-3">
+      <MoviesContainer>
         <div className="col-2">
           <h3 id="headElem" className="text-center font-weight-bold p-3">
             <i>Menu</i>
@@ -142,8 +157,7 @@ class Movies extends Component {
           <h3 id="headElem" className="text-center font-weight-bold p-3 d-flex">
             {user?.isAdmin && (
               <Link to="/movies/new" className="btn btn-primary mr-3">
-                {' '}
-                New Movie{' '}
+                New Movie
               </Link>
             )}
             <i>
@@ -166,7 +180,7 @@ class Movies extends Component {
             onPageChange={this.handlePageChange}
           />
         </div>
-      </div>
+      </MoviesContainer>
     )
   }
 }

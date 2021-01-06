@@ -3,6 +3,25 @@ import Form from './form/Form'
 import { getGenres } from '../services/genreService'
 import { getMovie, saveMovie } from '../services/movieService'
 
+// Styles 
+import styled from 'styled-components';
+
+const MovieContainer = styled.div `
+  margin: 60px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  h3 {
+    align-self: center;
+  }
+
+  h3 span {
+    color: orange;
+  }
+
+`
+
 export default class Movie extends Form {
   state = {
     data: {
@@ -63,7 +82,8 @@ export default class Movie extends Form {
   }
   render() {
     return (
-      <div className="m-4">
+      <MovieContainer>
+        <h3>Editing the movie <span>{this.state.data.title}</span></h3>
         <form onSubmit={this.handlerSubmit}>
           {this.renderingInput('title', 'Title')}
           {this.renderingSelect('genreId', 'Genre')}
@@ -71,7 +91,7 @@ export default class Movie extends Form {
           {this.renderingInput('dailyRentalRate', 'Rate')}
           {this.renderButton('Save')}
         </form>
-      </div>
+      </MovieContainer>
     )
   }
 }
