@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { getJwt } from '../../services/authService'
 
-export const ProtectRoute = ({component: Component, path}) => {
+export const ProtectRoute = ({ component: Component, path }) => {
   return (
     <>
       <Route
@@ -11,6 +11,7 @@ export const ProtectRoute = ({component: Component, path}) => {
           if (!getJwt())
             return (
               <Redirect
+                exact
                 to={{
                   pathname: '/login',
                   state: { from: props.location.pathname },

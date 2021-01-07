@@ -1,12 +1,14 @@
 import { Component } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import Images from './common/Images'
+import { MoviesGet } from './MoviesGet'
 
 //Styles
 import styled from 'styled-components'
 
 //Images
 import imgLogo from '../Images/Logos/Logo.png'
+import { SearchBox } from './common/SearchBox'
 
 // Create a NavbarContainer component that'll render an <nav> tag with some styles
 
@@ -42,7 +44,6 @@ const NavbarContainer = styled.nav`
   }
 
   ul li {
-    
   }
 
   ul li a {
@@ -51,7 +52,7 @@ const NavbarContainer = styled.nav`
     color: #6610f2;
   }
 
-  ul li button { 
+  ul li button {
     border: none;
     background: transparent;
     padding: 0;
@@ -59,7 +60,7 @@ const NavbarContainer = styled.nav`
   }
 
   ul li button i {
-    display: flex; 
+    display: flex;
     flex-wrap: wrap;
     border: none;
     background: transparent;
@@ -71,12 +72,20 @@ const NavbarContainer = styled.nav`
     outline: none;
     box-shadow: 0 0 8px #ccc;
   }
-  
 `
 
-export default class Navbar extends Component {
+class Navbar extends Component {
+  state = {
+    clickedSearch: false,
+  }
+
+  handleClickSearch = () => {
+    this.setState({clickedSearch: true})
+  }
+
   render() {
     const { user } = this.props
+    // console.log(this.props)
     return (
       <NavbarContainer>
         <Link to="/">
@@ -84,8 +93,15 @@ export default class Navbar extends Component {
         </Link>
         <ul>
           <li>
-            <button type="submit">
-              <i class="fa fa-search"></i>
+            <button type="submit" onClick={this.handleClickSearch}>
+              {this.state.clickedSearch ? (
+                <SearchBox
+                  searchQuery={this.props.searchQuery}
+                  onSearch={this.props.onSearch}
+                />
+              ) : (
+                <i className="fa fa-search"></i>
+              )}
             </button>
           </li>
           {user && (
@@ -121,3 +137,5 @@ export default class Navbar extends Component {
     )
   }
 }
+
+export default MoviesGet(Navbar)

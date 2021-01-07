@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify'
 import { getCurrentUser } from './services/authService'
 
 // Components
-import Movies from './components/Movies'
+import { MoviesGet } from './components/MoviesGet'
 import Movie from './components/Movie'
 import Navbar from './components/Navbar'
 import Login from './components//form/Login'
@@ -17,7 +17,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 export class App extends Component {
-  state={}
+  state = {}
+
   componentDidMount() {
     try {
       const user = getCurrentUser()
@@ -33,14 +34,15 @@ export class App extends Component {
           <ToastContainer />
           <Navbar user={user} />
           <Switch>
-            <ProtectRoute path="/movies/:id" component={Movie} />
             <Route
+              exact
               path="/movies"
-              render={(props) => <Movies {...props} user={user} />}
+              render={(props) => <MoviesGet {...props} user={user} />}
             />
-            <Route path="/Login" component={Login} />
-            <Route path="/LogOut" component={logOut} />
-            <Route path="/register" component={RegisterForm} />
+            <ProtectRoute path="/movies/:id" component={Movie} />
+            <Route exact path="/Login" component={Login} />
+            <Route exact path="/LogOut" component={logOut} />
+            <Route exact path="/register" component={RegisterForm} />
             <Redirect to="/movies" from="/" />
           </Switch>
         </BrowserRouter>

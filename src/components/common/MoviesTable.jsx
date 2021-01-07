@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Like from './Like'
-import { ProtectUser } from './ProtectUser'
 import { Table } from './Table'
 
 // Styles 
-import styled from 'styled-components'
+// import styled from 'styled-components'
 // Create a TableStyle component that'll render an <div> tag with some styles
 
 
